@@ -12,11 +12,14 @@ module.exports = {
       const user = await new User(data);
       user.save();
 
-      res.json({
+      res.status(201).json({
         message: "data has been created",
       });
     } catch (error) {
-      console.log(error);
+      res.status(401).json({
+        message: "failed to create user",
+        error: error.message,
+      });
     }
   },
 
@@ -38,22 +41,25 @@ module.exports = {
             { expiresIn: "1d" }
           );
 
-          res.json({
+          res.status(200).json({
             message: "Login success",
             token: token,
           });
         } else {
-          res.json({
+          res.status(401).json({
             message: "Email or Password wrong",
           });
         }
       } else {
-        res.json({
+        res.status(401).json({
           message: "Email or Password wrong",
         });
       }
     } catch (error) {
-      console.log(error);
+      res.status(500).json({
+        message: "failed login",
+        error: error.message,
+      });
     }
   },
 };
