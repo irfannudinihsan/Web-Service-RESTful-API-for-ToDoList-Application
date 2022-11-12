@@ -3,7 +3,7 @@ const Todolistuser = require("../models/todolistuser");
 module.exports = {
   getAllTodolistuser: async (req, res) => {
     try {
-      const todolistusers = await Todolistuser.find().populate("user");
+      const todolistusers = await Todolistuser.find().populate("user", "name");
       res.status(200).json({
         message: "get all todolist user",
         data: todolistusers,
@@ -71,6 +71,35 @@ module.exports = {
     }
   },
 
-  deleteTodolistuser: async (req, res) => {},
-  deleteAllTodolistuser: async (req, res) => {},
+  deleteTodolistuser: async (req, res) => {
+    try {
+      const todolistuser = await Todolistuser.findOneAndDelete({
+        _id: req.params.id,
+      });
+
+      res.status(201).json({
+        data: todolistuser,
+        message: "success delete data todolistuser",
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "failed delete todolistuser",
+        error: error.message,
+      });
+    }
+  },
+  deleteAllTodolistuser: async (req, res) => {
+    try {
+      const todolistusers = await Todolistuser.deleteMany({});
+      res.status(201).json({
+        data: todolistusers,
+        message: "success delete all todolistuser",
+      });
+    } catch (error) {
+      res.status(401).json({
+        message: "failed delete all todolistuser",
+        error: error.message,
+      });
+    }
+  },
 };

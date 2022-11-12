@@ -67,8 +67,8 @@ module.exports = {
         message: "success delete data user",
       });
     } catch (error) {
-      res.status(500).json({
-        message: " not data user delete",
+      res.status(401).json({
+        message: " failed delete user",
         error: error.message,
       });
     }

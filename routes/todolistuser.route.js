@@ -16,6 +16,6 @@ todolistuserRouter.get("/:id", getTodolistuserByID);
 todolistuserRouter.post("/", addTodolistuser);
 todolistuserRouter.put("/:id", updateTodolistuser);
 todolistuserRouter.delete("/:id", deleteTodolistuser);
-todolistuserRouter.delete("/:id", deleteAllTodolistuser);
+todolistuserRouter.delete("/", deleteAllTodolistuser);
 
 module.exports = todolistuserRouter;
