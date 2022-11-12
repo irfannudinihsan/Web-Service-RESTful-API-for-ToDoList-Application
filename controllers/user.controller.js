@@ -19,7 +19,7 @@ module.exports = {
 
   getUserByID: async (req, res) => {
     try {
-      const users = await User.find({ _id: req.params.id });
+      const users = await User.findById({ _id: req.params.id });
 
       res.json({
         data: users,

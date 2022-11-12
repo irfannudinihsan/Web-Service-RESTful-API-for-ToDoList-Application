@@ -37,7 +37,7 @@ module.exports = {
               name: user.name,
               email: user.email,
             },
-            "qwerty",
+            "secret",
             { expiresIn: "1d" }
           );
 
