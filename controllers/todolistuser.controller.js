@@ -9,12 +9,10 @@ module.exports = {
 
       const verified = jwt.verify(token, "secret");
 
-      const todolistusers = await Todolistuser.find({user: verified.id}).populate(
-        "user",
-        "name"
-      )
+      const todolistusers = await Todolistuser.find({
+        user: verified.id,
+      }).populate("user", "name");
 
-    
       res.status(201).json({
         message: "get all todolisuser",
         data: todolistusers,
@@ -25,8 +23,6 @@ module.exports = {
         error: error.message,
       });
     }
-
-    
   },
   getTodolistuserByID: async (req, res) => {
     try {
@@ -76,7 +72,7 @@ module.exports = {
     } catch (error) {
       res.status(404).json({
         message: "failed to create todolist",
-        error: message.error,
+        error: error.message,
       });
     }
   },
@@ -138,18 +134,14 @@ module.exports = {
   },
   deleteAllTodolistuser: async (req, res) => {
     try {
-
       const auth = req.headers.authorization;
       const token = auth.split(" ")[1];
 
       const verified = jwt.verify(token, "secret");
 
-
-      const todolistusers = await Todolistuser.deleteMany({user: verified.id}).populate(
-        "user",
-        "name"
-      )
-;
+      const todolistusers = await Todolistuser.deleteMany({
+        user: verified.id,
+      }).populate("user", "name");
       res.status(201).json({
         data: todolistusers,
         message: "success delete all todolistuser",

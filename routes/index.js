@@ -7,5 +7,5 @@ const todolistuserRouter = require("./todolistuser.route");
 
 router.use("/auth", authRouter);
 router.use("/users", userRouter);
-router.use("/todolistuser", todolistuserRouter);
+router.use("/todolistusers", todolistuserRouter);
 module.exports = router;
