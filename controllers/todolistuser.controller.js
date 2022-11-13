@@ -9,45 +9,24 @@ module.exports = {
 
       const verified = jwt.verify(token, "secret");
 
-      const todolistusers = await Todolistuser.find({where : { user: verified.id }}).populate(
+      const todolistusers = await Todolistuser.find({user: verified.id}).populate(
         "user",
         "name"
-      );
+      )
 
-      // if (todolistuser.user == verified.id) {
-      //   res.status(200).json({
-      //     message: "get todolist user",
-      //     data: todolistuser,
-      //   });
-      // } else {
-      //   res.status(401).json({
-      //     message: "Unauthorized",
-      //   });
-      // }
-
+    
       res.status(201).json({
-        message: "can token from user",
+        message: "get all todolisuser",
         data: todolistusers,
       });
     } catch (error) {
       res.status(404).json({
-        message: "data all todolist not found",
+        message: "todolistuser not found",
         error: error.message,
       });
     }
 
-    // try {
-    //
-    //   res.status(200).json({
-    //     message: "get all todolist user",
-    //     data: todolistusers,
-    //   });
-    // } catch (error) {
-    //   res.status(404).json({
-    //     message: "data all todolist not found",
-    //     error: error.message,
-    //   });
-    // }
+    
   },
   getTodolistuserByID: async (req, res) => {
     try {
@@ -60,7 +39,7 @@ module.exports = {
 
       if (todolistuser.user == verified.id) {
         res.status(200).json({
-          message: "get todolist user",
+          message: "succes get todolist user",
           data: todolistuser,
         });
       } else {
@@ -91,7 +70,7 @@ module.exports = {
       await todolistuser.save();
 
       res.status(201).json({
-        message: "add data todolist user success",
+        message: "add todolistuser success",
         data: todolistuser,
       });
     } catch (error) {
@@ -120,12 +99,12 @@ module.exports = {
         await todolistuser.save();
 
         res.status(201).json({
-          message: " data todolist has been update ",
+          message: " data todolistuser has been update ",
         });
       }
     } catch (error) {
       res.status(401).json({
-        message: "data cannot be updated",
+        message: "todolistuser cannot be updated",
       });
     }
   },
@@ -142,7 +121,7 @@ module.exports = {
       });
       if (todolistuser.user == verified.id) {
         res.status(200).json({
-          message: "success delete data todolistener!!",
+          message: "success data todolistener",
           data: todolistuser,
         });
       } else {
@@ -159,7 +138,18 @@ module.exports = {
   },
   deleteAllTodolistuser: async (req, res) => {
     try {
-      const todolistusers = await Todolistuser.deleteMany({});
+
+      const auth = req.headers.authorization;
+      const token = auth.split(" ")[1];
+
+      const verified = jwt.verify(token, "secret");
+
+
+      const todolistusers = await Todolistuser.deleteMany({user: verified.id}).populate(
+        "user",
+        "name"
+      )
+;
       res.status(201).json({
         data: todolistusers,
         message: "success delete all todolistuser",

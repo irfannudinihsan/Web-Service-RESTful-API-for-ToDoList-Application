@@ -6,7 +6,7 @@ module.exports = {
       const users = await User.find({}, "-_v -password");
 
       res.status(200).json({
-        message: "success get all data",
+        message: "success get all user",
         data: users,
       });
     } catch (error) {
@@ -22,7 +22,9 @@ module.exports = {
       const users = await User.findById({ _id: req.params.id });
 
       res.json({
+        message : "success get user",
         data: users,
+
       });
     } catch (error) {
       res.status(404).json({
@@ -47,12 +49,12 @@ module.exports = {
         await users.save();
 
         res.status(201).json({
-          message: "data user has been update",
+          message: "user has been update",
         });
       }
     } catch (error) {
       res.status(401).json({
-        message: " data cannot be updated",
+        message: " user cannot be updated",
         error: error.message,
       });
     }
@@ -64,7 +66,7 @@ module.exports = {
 
       res.status(201).json({
         data: users,
-        message: "success delete data user",
+        message: "success delete user",
       });
     } catch (error) {
       res.status(401).json({
